@@ -17,7 +17,8 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie', 'logout', 'login', 'register', 'forgot-password',
     'reset-password', 'email/verify/*', 'email/resend', 'user', 'update-username', 'update-email',
-     'update-password', 'delete-account', 'update-avatar', 'modules', 'modules/*', 'auth/google/redirect',],
+     'update-password', 'delete-account', 'update-avatar', 'modules', 'modules/*', 'auth/google/redirect',
+    ],
 
     'allowed_methods' => ['*'],
 

@@ -19,6 +19,12 @@ import ModulesPage from '../pages/ModulesPage';
 import GoogleCallback from '../pages/GoogleCallback';
 import ModulesPageUser from '../pages/ModulesPageUser';
 import ContactSupportPage from '../pages/ContactSupportPage';
+import Founders from '../components/landing/Founders';
+import SingleModulePage from '../pages/SingleModulePage';
+import DocumentsAdminPage from '../pages/DocumentsAdminPage';
+import AddDocument from '../components/admin/documents/AddDocument';
+import EditDocument from '../components/admin/documents/EditDocument';
+import SingleDocumentPage from '../pages/SingleDocumentPage';
 
 export const HOME_ROUTE = '/';
 export const LOGIN_ROUTE = '/login';
@@ -29,8 +35,11 @@ export const router = createBrowserRouter([
         { path: "/", element: <HomePage /> },
         { path: "/accueil", element: <HomePage /> },
         { path: "/modules", element: <ModulesPageUser /> },
+        { path: "/modules/:id", element: <SingleModulePage /> },
         { path: "/documents", element: <p>Documents</p> },
+        { path: "/documents/:id", element: <SingleDocumentPage /> },
         { path: "/contact-support", element: <ContactSupportPage /> },
+        { path: "/founders", element: <Founders /> },
         { path: "*", element: <NotFoundPage /> },
       ],
     },
@@ -43,6 +52,7 @@ export const router = createBrowserRouter([
         { path: "/password-reset/:token", element: <ResetPasswordPage /> },
         { path: "/login/callback", element: <GoogleCallback /> },
         { path: "/contact-support", element: <ContactSupportPage /> },
+        { path: "/founders", element: <Founders /> },
         { path: "/accueil", element: <HomePage /> },
         { path: "*", element: <NotFoundPage /> },
       ],
@@ -53,6 +63,7 @@ export const router = createBrowserRouter([
         { path: "/profile", element: <ProfilePage /> },
         { path: "/favorites", element: <p>Favoris</p> },
         { path: "/contact-support", element: <ContactSupportPage /> },
+        { path: "/founders", element: <Founders /> },
         { path: "*", element: <NotFoundPage /> },
         { path: "/accueil", element: <HomePage /> },
       ],
@@ -69,6 +80,9 @@ export const router = createBrowserRouter([
           { path: "/admin/profile", element: <ProfileAdmin /> },
           { path: "/admin/settings", element: <SettingsPage /> },
           { path: "/admin/modules", element: <ModulesPage /> },
+          { path: "/admin/documents", element: <DocumentsAdminPage /> },
+          { path: "/admin/documents/add", element: <AddDocument /> },
+          { path: "/admin/documents/edit/:id", element: <EditDocument /> },
           { path: "*", element: <NotFoundPage /> },
         ],
       }

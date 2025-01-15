@@ -62,7 +62,7 @@ function SideBare() {
       variants={sidebarVariants}
       initial={isOpen ? "open" : "closed"}
       animate={isOpen ? "open" : "closed"}
-      className="bg-gray-800 text-white h-screen flex flex-col shadow-lg"
+      className="bg-gray-800 text-white h-screen flex flex-col shadow-lg min-h-screen"
     >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-700">

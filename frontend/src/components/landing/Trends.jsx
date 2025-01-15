@@ -5,9 +5,13 @@ import Slider from "react-slick"; // Bibliothèque pour le slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaArrowRight, FaFileAlt, FaCalendarAlt } from "react-icons/fa";
+import { ClipLoader } from "react-spinners"; // Loader
+import { useNavigate } from "react-router-dom";
 
 function Trends() {
   const [modules, setModules] = useState([]);
+  const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
   // Récupérer les données des modules
   useEffect(() => {
@@ -17,6 +21,8 @@ function Trends() {
         setModules(response.data);
       } catch (error) {
         console.error("Erreur lors de la récupération des modules :", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -25,7 +31,6 @@ function Trends() {
 
   // Configuration du slider
   const sliderSettings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
@@ -46,6 +51,14 @@ function Trends() {
     ],
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <ClipLoader size={50} color="#4A90E2" />
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto py-16 px-6">
       {/* Titre et introduction */}
@@ -55,7 +68,7 @@ function Trends() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-4xl font-extrabold text-primary-dark mb-4">
+        <h2 className="text-3xl lg:text-4xl font-extrabold text-primary-dark mb-4">
           Modules Tendance
         </h2>
         <p className="text-gray-700 text-lg">
@@ -76,7 +89,7 @@ function Trends() {
           >
             <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow">
               {/* Image du module */}
-              <div className="w-full h-40 bg-gray-100 flex items-center justify-center">
+              <div className="w-full h-32 lg:h-40 bg-gray-100 flex items-center justify-center">
                 {module.imageMod ? (
                   <img
                     src={module.imageMod}
@@ -89,11 +102,11 @@ function Trends() {
               </div>
 
               {/* Contenu du module */}
-              <div className="p-6 text-left">
-                <h3 className="text-2xl font-bold text-primary-dark mb-2">
+              <div className="p-4 lg:p-6 text-left">
+                <h3 className="text-lg lg:text-xl font-bold text-primary-dark mb-2">
                   {module.nomMod}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-4">
                   {module.descriptionMod}
                 </p>
 
@@ -106,25 +119,18 @@ function Trends() {
                 {/* Boutons d'action */}
                 <div className="flex flex-col md:flex-row gap-3">
                   <motion.button
-                    className="bg-primary text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-light"
+                    className="bg-primary-dark w-full text-white py-2 px-4 rounded-lg
+                    flex items-center justify-center gap-2 hover:bg-primary text-sm lg:text-base"
                     whileHover={{ x: 5 }}
-                    onClick={() =>
-                      (window.location.href = `/modules/${module.id}`)
-                    }
+                    onClick={() =>{
+                        navigate(`/modules/${module.nomMod.toLowerCase().replace(/\s+/g, "-")}-${module.id}`, {
+                          state: module,
+                        });
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
                   >
                     Voir plus
                     <FaArrowRight />
-                  </motion.button>
-
-                  <motion.button
-                    className="bg-secondary text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-secondary-light"
-                    whileHover={{ x: 5 }}
-                    onClick={() =>
-                      (window.location.href = `/modules/${module.id}/documents`)
-                    }
-                  >
-                    Voir les documents liés
-                    <FaFileAlt />
                   </motion.button>
                 </div>
               </div>

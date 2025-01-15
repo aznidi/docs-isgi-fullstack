@@ -2,9 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 
 
@@ -48,6 +49,14 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::delete('/admin/user/{id}', [AdminController::class, 'deleteUser']);
 });
 
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::get('/admin/documents', [DocumentController::class, 'index']);
+    Route::post('/admin/documents', [DocumentController::class, 'store']);
+    Route::get('/admin/documents/{id}', [DocumentController::class, 'show']);
+    Route::put('/admin/documents/{id}', [DocumentController::class, 'update']);
+    Route::delete('/admin/documents/{id}', [DocumentController::class, 'destroy']);
+});
+
 
 
 
@@ -58,3 +67,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/modules/{id}', [ModuleController::class, 'update']); // Mettre à jour un module
     Route::delete('/modules/{id}', [ModuleController::class, 'destroy']); // Supprimer un module
 });
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/modules/{moduleId}/documents/search', [DocumentController::class, 'searchDocuments']);
+    Route::get('/documents/{id}/', [DocumentController::class, 'show']);
+    Route::post('/documents/{id}/comments', [DocumentController::class, 'addComment']);
+    Route::get('/documents/{id}/comments', [DocumentController::class, 'getComments']);
+    Route::post('/documents/{id}/report', [DocumentController::class, 'reportDocument']);
+    Route::get('/documents/{id}/similar', [DocumentController::class, 'getSimilarDocuments']);
+
+    // Routes pour les likes
+    Route::get('/documents/{id}/likes', [DocumentController::class, 'getTotalLikes']);
+    Route::post('/documents/{id}/like', [DocumentController::class, 'toggleLike']);
+    Route::get('/documents/{id}/like-status', [DocumentController::class, 'getLikeStatus']);
+
+});
+

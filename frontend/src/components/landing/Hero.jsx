@@ -14,7 +14,7 @@ export default function Hero() {
     >
       {/* Contenu principal */}
       <motion.div
-        className="flex flex-col space-y-6 md:w-1/2 text-center md:text-left mt-24"
+        className="flex flex-col space-y-6 md:w-1/2 text-center md:text-center mt-24"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1 }}
@@ -25,7 +25,7 @@ export default function Hero() {
           delay={150}
           animateBy="words"
           direction="top"
-          className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary-dark leading-tight"
+          className="text-3xl sm:text-4xl md:text-5xl md:text-center font-extrabold text-primary-dark leading-tight"
         />
 
         {/* Description */}

@@ -21,7 +21,7 @@ function Footer() {
           <div>
             <h4 className="text-xl font-semibold text-primary-light mb-4">Liens utiles</h4>
             <ul className="space-y-3">
-              {["Accueil", "Modules", "Documents", "Rechercher", "Contact-Support"].map((item) => (
+              {["Accueil", "Modules", "Documents", "Founders", "Contact-Support"].map((item) => (
                 <li key={item}>
                   <Link
                     to={`/${item.toLowerCase()}`}
@@ -99,6 +99,8 @@ function Footer() {
           {/* Texte copyright */}
           <p className="text-gray-400 text-center text-sm md:text-base">
             © {new Date().getFullYear()} <span className="text-primary">ISGIDocs</span>. Tous droits réservés.
+            <br />
+            Développé par <a href="https://aznidi.vercel.app" className="text-primary-dark underline" target="_blank">This Guy</a>
           </p>
         </div>
       </div>

@@ -96,7 +96,7 @@ function Navbar() {
         <ul className="hidden lg:flex items-center space-x-6 text-primary">
           {["Accueil", "Modules", "Documents", "Rechercher"].map((item) => (
             <li key={item} className="group relative">
-              <Lien href={`/${item.toLowerCase()}`} variant="neutral">
+              <Lien href={`/${item.toLowerCase()}`} variant="neutral" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                 {item}
               </Lien>
               {/* Trait animé sous le lien */}
@@ -191,7 +191,7 @@ function Navbar() {
             <ul className="flex flex-col mt-20 space-y-6 w-full bg-white">
             {["Accueil", "Modules", "Documents", "Rechercher"].map((item, index) => (
                 <li key={item} className="group relative">
-                <Lien href={`/${item.toLowerCase()}`} variant="neutral">
+                <Lien href={`/${item.toLowerCase()}`} variant="neutral" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                     {item}
                 </Lien>
                 {/* Underline Animation */}
