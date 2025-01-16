@@ -65,15 +65,16 @@ class DocumentController extends Controller
         $document = Document::with('module')->find($id);
 
         if (!$document) {
-            return response()->json(['message' => 'Document introuvable'], 404);
+            return response()->json(['message' => 'Document introuvable', 'id' => $id], 404);
         }
 
         if ($document->type !== 'video' && $document->path) {
-            $document->path = url("storage/{$document->path}"); // Générer l'URL pour les fichiers
+            $document->path = url("storage/{$document->path}");
         }
 
         return response()->json($document);
     }
+
 
     // Met à jour un document
     public function update(Request $request, $id)
@@ -258,9 +259,13 @@ class DocumentController extends Controller
             ->where('user_id', $userId)
             ->first();
 
+        // Trouver le document pour incrementer la colonne likes
+        $document = Document::find($id);
+
         if ($existingLike) {
             // Supprimer le like existant
             $existingLike->delete();
+            $document->decrement('likes');
 
             return response()->json(['message' => 'Like supprimé', 'status' => 'removed']);
         } else {
@@ -269,6 +274,7 @@ class DocumentController extends Controller
                 'user_id' => $userId,
                 'document_id' => $id,
             ]);
+            $document->increment('likes');
 
             return response()->json(['message' => 'Like ajouté', 'status' => 'added']);
         }

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
-import { ClipLoader } from "react-spinners"; // Loader pour l'attente
+import { HashLoader } from "react-spinners"; // Loader pour l'attente
 
 function RequireAdmin({ children }) {
     const { user, loading } = useContext(AuthContext);
@@ -10,7 +10,7 @@ function RequireAdmin({ children }) {
     if (loading) {
         return (
         <div className="flex justify-center items-center min-h-screen">
-            <ClipLoader size={50} color="#4A90E2" />
+            <HashLoader size={50} color="#4A90E2" />
         </div>
         );
     }

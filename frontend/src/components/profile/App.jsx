@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../../router/index";
 import { axiosClient } from "../../api/axios";
 import { motion } from "framer-motion";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import UserInfo from "./UserInfo";
 import ProfileImageUploader from "./ProfileImageUploader";
 import FavoriteDocuments from "./FavoriteDocuments";
@@ -39,7 +39,7 @@ function App() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <ClipLoader size={50} color="#4A90E2" />
+        <HashLoader size={50} color="#4A90E2" />
       </div>
     );
   }

@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import Button from "../../ui/Button";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import { axiosClient } from "../../api/axios";
 
 function UserInfo({ user, fetchUserProfile }) {
@@ -108,7 +108,7 @@ function UserInfo({ user, fetchUserProfile }) {
               className="w-full"
               disabled={isSubmitting}
             >
-              {isSubmitting ? <ClipLoader size={20} color="white" /> : "Mettre à jour"}
+              {isSubmitting ? <HashLoader size={20} color="white" /> : "Mettre à jour"}
             </Button>
           </Form>
         )}

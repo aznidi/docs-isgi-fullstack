@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { motion } from "framer-motion";
 import { FaSearch } from "react-icons/fa";
 import DocumentCard from "./DocumentCard";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import { axiosClient } from "../../api/axios";
 
 function SearchDocuments({ moduleId, moduleName }) {
@@ -96,7 +96,7 @@ function SearchDocuments({ moduleId, moduleName }) {
       {/* Résultats ou Loader */}
       {loading ? (
         <div className="flex justify-center items-center py-10">
-          <ClipLoader size={40} color="#4A90E2" />
+          <HashLoader size={40} color="#4A90E2" />
         </div>
       ) : (
         <motion.div

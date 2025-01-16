@@ -4,7 +4,7 @@ import { axiosClient } from "../../api/axios";
 import DocInfos from "./DocInfos";
 import DocComments from "./DocComments";
 import DocSimilaires from "./DocSimilaires";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 
@@ -61,7 +61,7 @@ function App() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <ClipLoader size={50} color="#4A90E2" />
+        <HashLoader size={50} color="#4A90E2" />
       </div>
     );
   }
@@ -87,7 +87,7 @@ function App() {
       <div className="mb-10">
         {loadingComments ? (
           <div className="flex justify-center">
-            <ClipLoader size={30} color="#4A90E2" />
+            <HashLoader size={30} color="#4A90E2" />
           </div>
         ) : (
           <DocComments comments={comments} documentId={document.id} />
@@ -97,7 +97,7 @@ function App() {
       {/* Documents similaires */}
     <div>
           {
-            document ? <DocSimilaires moduleId={document.module_id} documentId={document.id} /> : <ClipLoader size={30} color="#4A90E2" />
+            document ? <DocSimilaires moduleId={document.module_id} documentId={document.id} /> : <HashLoader size={30} color="#4A90E2" />
           }
 
       </div>

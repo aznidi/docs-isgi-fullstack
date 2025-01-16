@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import Button from "../../ui/Button";
 import { axiosClient } from "../../api/axios";
 
@@ -51,7 +51,6 @@ function ProfileImageUploader({ user, fetchUserProfile }) {
       setUploading(false);
       setSelectedFile(null); // Réinitialiser l'état du fichier
       setPreviewUrl(null); // Réinitialiser la prévisualisation
-      console.log("État réinitialisé après upload.");
     }
   };
 
@@ -103,7 +102,7 @@ function ProfileImageUploader({ user, fetchUserProfile }) {
               disabled={uploading || !selectedFile}
             >
               {uploading ? (
-                <ClipLoader size={20} color="white" />
+                <HashLoader size={20} color="white" />
               ) : (
                 <>
                   <span>Mettre à jour l'image</span>

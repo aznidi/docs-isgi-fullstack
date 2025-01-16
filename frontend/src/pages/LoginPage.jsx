@@ -84,7 +84,7 @@ function LoginPage() {
         animate="visible"
       >
         {/* Titre */}
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-primary-dark mb-6">
           Connexion
         </h2>
 

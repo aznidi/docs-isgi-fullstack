@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Module;
+use App\Models\Report;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Document extends Model
 {
@@ -55,4 +58,14 @@ class Document extends Model
         return $this->belongsToMany(User::class, 'user_likes', 'document_id', 'user_id')
                     ->withTimestamps();
     }
+
+     /**
+     * Relation : Un document peut être suvgardee par plusieurs utilisateurs (Favoris).
+     */
+
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+    }
+
 }

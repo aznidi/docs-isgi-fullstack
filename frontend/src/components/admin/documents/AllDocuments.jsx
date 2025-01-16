@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import { axiosClient } from "../../../api/axios";
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 
 function AllDocuments() {
@@ -71,7 +71,7 @@ function AllDocuments() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <ClipLoader size={50} color="#4A90E2" />
+        <HashLoader size={50} color="#4A90E2" />
       </div>
     );
   }

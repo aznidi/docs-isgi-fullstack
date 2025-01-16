@@ -4,23 +4,26 @@ import { axiosClient } from "../../api/axios"; // Client pour gérer les requêt
 import Slider from "react-slick"; // Bibliothèque pour le slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaArrowRight, FaFileAlt, FaCalendarAlt } from "react-icons/fa";
-import { ClipLoader } from "react-spinners"; // Loader
+import { FaThumbsUp, FaArrowRight } from "react-icons/fa";
+import { HashLoader } from "react-spinners"; // Loader
 import { useNavigate } from "react-router-dom";
+import DocumentCard from "../singleModule/DocumentCard";
 
 function Trends() {
-  const [modules, setModules] = useState([]);
+  const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // Récupérer les données des modules
+  // Récupérer les données des documents
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const response = await axiosClient.get("/api/modules");
-        setModules(response.data);
+        const response = await axiosClient.get(
+          "/api/public/statistics/top-liked-documents"
+        );
+        setDocuments(response.data.topLikedDocuments);
       } catch (error) {
-        console.error("Erreur lors de la récupération des modules :", error);
+        console.error("Erreur lors de la récupération des documents :", error);
       } finally {
         setLoading(false);
       }
@@ -54,7 +57,7 @@ function Trends() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <ClipLoader size={50} color="#4A90E2" />
+        <HashLoader size={50} color="#4A90E2" />
       </div>
     );
   }
@@ -63,81 +66,42 @@ function Trends() {
     <div className="container mx-auto py-16 px-6">
       {/* Titre et introduction */}
       <motion.div
-        className="text-center mb-8"
+        className="text-center mb-12"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-3xl lg:text-4xl font-extrabold text-primary-dark mb-4">
-          Modules Tendance
+        <h2 className="text-3xl lg:text-4xl font-extrabold text-primary-dark mb-4 flex items-center justify-center gap-2">
+         Documents Les Plus Aimés
         </h2>
         <p className="text-gray-700 text-lg">
-          Découvrez les modules les plus populaires de la semaine. Boostez vos
-          connaissances dès maintenant !
+          Découvrez les documents les plus appréciés par notre communauté cette
+          semaine. Enrichissez vos connaissances dès aujourd'hui !
         </p>
       </motion.div>
 
       {/* Slider */}
-      <Slider {...sliderSettings}>
-        {modules.map((module) => (
-          <motion.div
-            key={module.id}
-            className="p-4"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow">
-              {/* Image du module */}
-              <div className="w-full h-32 lg:h-40 bg-gray-100 flex items-center justify-center">
-                {module.imageMod ? (
-                  <img
-                    src={module.imageMod}
-                    alt={module.nomMod}
-                    className="w-full h-full object-contain"
-                  />
-                ) : (
-                  <span className="text-gray-500 text-sm">Aucune image</span>
-                )}
-              </div>
-
-              {/* Contenu du module */}
-              <div className="p-4 lg:p-6 text-left">
-                <h3 className="text-lg lg:text-xl font-bold text-primary-dark mb-2">
-                  {module.nomMod}
-                </h3>
-                <p className="text-gray-600 text-sm lg:text-base leading-relaxed mb-4">
-                  {module.descriptionMod}
-                </p>
-
-                {/* Section Année avec icône */}
-                <div className="flex items-center text-gray-600 mb-4">
-                  <FaCalendarAlt className="text-primary mr-2" />
-                  <span className="text-sm font-medium">{module.anneeMod}</span>
-                </div>
-
-                {/* Boutons d'action */}
-                <div className="flex flex-col md:flex-row gap-3">
-                  <motion.button
-                    className="bg-primary-dark w-full text-white py-2 px-4 rounded-lg
-                    flex items-center justify-center gap-2 hover:bg-primary text-sm lg:text-base"
-                    whileHover={{ x: 5 }}
-                    onClick={() =>{
-                        navigate(`/modules/${module.nomMod.toLowerCase().replace(/\s+/g, "-")}-${module.id}`, {
-                          state: module,
-                        });
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                      }}
-                  >
-                    Voir plus
-                    <FaArrowRight />
-                  </motion.button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+      <Slider
+        {...sliderSettings}
+        className="gap-6" // Ajouter un espace entre les cartes
+      >
+        {documents.map((doc) => (
+          <div key={doc.id} className="px-4">
+            <DocumentCard document={doc} />
+          </div>
         ))}
       </Slider>
+
+      {/* Bouton voir plus */}
+      <div className="flex justify-center mt-10">
+        <button
+          onClick={() => navigate("/documents")}
+          className="flex items-center gap-2 px-6 py-3 bg-primary-dark text-white rounded-full shadow-lg hover:bg-primary focus:outline-none transition-all"
+        >
+          Voir Tous les Documents
+          <FaArrowRight />
+        </button>
+      </div>
     </div>
   );
 }

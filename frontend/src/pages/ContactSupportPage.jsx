@@ -45,7 +45,7 @@ function ContactSupportPage() {
   </p>
 
   {/* Formulaire */}
-  <div className="p-8 rounded-md shadow-md w-full md:w-2/3 lg:w-1/2">
+  <div className="p-8 rounded-sm shadow-sm w-full md:w-2/3 lg:w-1/2">
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}

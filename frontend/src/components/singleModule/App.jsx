@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { axiosClient } from "../../api/axios";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import ModuleInfos from "./ModuleInfos";
 import SearchDocuments from "./SearchDocuments";
 
@@ -35,7 +35,7 @@ function App() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <ClipLoader size={50} color="#4A90E2" />
+        <HashLoader size={50} color="#4A90E2" />
       </div>
     );
   }

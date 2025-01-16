@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaVideo, FaArrowRight } from "react-icons/fa";
+import { FaVideo, FaArrowRight, FaDownload } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function DocumentCard({ document }) {
@@ -28,7 +28,7 @@ function DocumentCard({ document }) {
       {/* Contenu de la carte */}
       <div className="p-6 space-y-4">
         {/* Libellé (Titre principal) */}
-        <h3 className="text-2xl font-semibold text-gray-800">{document.libelleDoc}</h3>
+        <h3 className="text-2xl font-semibold text-primary-dark">{document.libelleDoc} ({document.module.nomMod})</h3>
 
         {/* Nom formaté (sous-titre) */}
         <p className="text-gray-600 text-sm italic">{formattedNomDoc}</p>

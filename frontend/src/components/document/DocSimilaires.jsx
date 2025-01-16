@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosClient } from "../../api/axios";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import DocumentCard from "../singleModule/DocumentCard"; // Réutilisation du composant DocumentCard
 import { motion } from "framer-motion";
 
@@ -29,7 +29,7 @@ function DocSimilaires({ moduleId, documentId }) {
   if (loading) {
     return (
       <div className="flex justify-center items-center py-6">
-        <ClipLoader size={40} color="#4A90E2" />
+        <HashLoader size={40} color="#4A90E2" />
       </div>
     );
   }

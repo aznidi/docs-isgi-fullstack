@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { FaHeart, FaVideo, FaDownload } from "react-icons/fa";
+import { FaHeart, FaVideo, FaDownload, FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import { axiosClient } from "../../api/axios";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 
 function DocInfos({ document }) {
   // Vérifiez si `document` est nul ou indéfini
   if (!document) {
     return (
       <div className="flex justify-center items-center py-6">
-        <ClipLoader size={30} color="#4A90E2" />
+        <HashLoader size={30} color="#4A90E2" />
       </div>
     );
   }
@@ -18,6 +18,9 @@ function DocInfos({ document }) {
   const [isLiked, setIsLiked] = useState(false); // Suivi de l'état du like
   const [likesCount, setLikesCount] = useState(0); // Compteur des likes
   const [isLoadingLike, setIsLoadingLike] = useState(false); // Loader pour les likes
+  const [isFavorite, setIsFavorite] = useState(false); // État pour les favoris
+  const [isLoadingFav, setIsLoadingFav] = useState(false);
+
 
   // Récupérer les likes lors du montage du composant
   useEffect(() => {
@@ -39,8 +42,22 @@ function DocInfos({ document }) {
       }
     };
 
+
+    const checkFavoriteStatus = async () => {
+        try {
+          const response = await axiosClient.get(`/api/documents/${document.id}/is-favorite`);
+          setIsFavorite(response.data.isFavorite);
+        } catch (error) {
+          //
+        } finally {
+          setLoading(false); // Désactiver le loader
+        }
+    };
+
+
     fetchLikes();
     fetchLikeState();
+    checkFavoriteStatus();
   }, [document.id]);
 
   const handleLike = async () => {
@@ -58,6 +75,25 @@ function DocInfos({ document }) {
       Swal.fire("Erreur", "Une erreur est survenue lors du traitement du like.", "error");
     } finally {
       setIsLoadingLike(false); // Désactiver le loader
+    }
+  };
+
+
+  const toggleFavorite = async () => {
+    try {
+        setIsLoadingFav(true);
+        const response = await axiosClient.post(`/api/documents/${document.id}/favorite`);
+        if (response.data.status === "added") {
+            setIsFavorite(true);
+            Swal.fire("Succès", "Document ajouté aux favoris", "success");
+        } else if (response.data.status === "removed") {
+            setIsFavorite(false);
+            Swal.fire("Succès", "Document retiré des favoris", "success");
+        }
+    } catch (error) {
+        Swal.fire("Erreur", "Impossible de mettre à jour les favoris", "error");
+    }finally{
+        setIsLoadingFav(false);
     }
   };
 
@@ -134,7 +170,7 @@ function DocInfos({ document }) {
           disabled={isLoadingLike}
         >
           {isLoadingLike ? (
-            <ClipLoader size={20} color="#FFFFFF" />
+            <HashLoader size={20} color="#FFFFFF" />
           ) : (
             <>
               <FaHeart />
@@ -144,6 +180,24 @@ function DocInfos({ document }) {
           <span className="text-sm bg-white text-red-500 px-2 py-1 rounded-md font-bold ml-2">
             {likesCount}
           </span>
+        </button>
+
+        <button
+            onClick={toggleFavorite}
+            className={`px-4 py-2 rounded-lg flex items-center justify-center space-x-2 ${
+            isFavorite ? "bg-yellow-500 text-white" : "bg-gray-300 text-gray-700"
+            }`}
+        >
+            {
+                isLoadingFav ? <HashLoader size={20} color="#FFFFFF" />
+                 : (
+                    <>
+                        <FaStar />
+                        <span>{isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}</span>
+                    </>
+                 )
+            }
+
         </button>
       </div>
     </motion.div>

@@ -96,6 +96,13 @@ function SideBare() {
             label="Gestion des Documents"
             isOpen={isOpen}
           />
+
+            <SidebarLink
+                to="/admin/exercises"
+                icon={FaBook}
+                label="Gestion des Exercices"
+                isOpen={isOpen}
+            />
           <SidebarLink
             to="/admin/users"
             icon={FaUser}

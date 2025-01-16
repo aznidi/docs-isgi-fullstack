@@ -98,4 +98,23 @@ class ModuleController extends Controller
 
         return response()->json(['message' => 'Module supprimé avec succès']);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query', '');
+        $year = $request->input('year', '');
+        $modules = Module::query();
+
+        if ($query) {
+            $modules->where('nomMod', 'like', "%$query%")
+                    ->orWhere('descriptionMod', 'like', "%$query%");
+        }
+
+        if ($year) {
+            $modules->where('anneeMod', $year);
+        }
+
+        return response()->json($modules->get());
+    }
+
 }

@@ -42,6 +42,9 @@ module.exports = {
             DEFAULT: "#10B981", // Vert pour succès (inchangé si utilisé ailleurs)
           },
         },
+        boxShadow: {
+            'top': '0 -4px 6px -1px rgba(0, 0, 0, 0.1)', // ombre en haut
+          },
         keyframes: {
             "accordion-down": {
               from: { height: "0" },
@@ -58,5 +61,5 @@ module.exports = {
           },
       },
     },
-    plugins: [],
+    plugins: [require('@tailwindcss/typography')],
   };

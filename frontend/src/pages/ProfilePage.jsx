@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import Button from "../ui/Button";
 import { motion } from "framer-motion";
 import { FaUser, FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
-import { ClipLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import App from "../components/profile/App";
 
 function ProfilePage() {
@@ -40,7 +40,7 @@ function ProfilePage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <ClipLoader size={50} color="#4A90E2" />
+        <HashLoader size={50} color="#4A90E2" />
       </div>
     );
   }
