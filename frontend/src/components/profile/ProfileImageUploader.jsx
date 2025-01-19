@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 import { HashLoader } from "react-spinners";
-import Button from "../../ui/Button";
+import { FaUpload, FaRedo, FaImage } from "react-icons/fa";
 import { axiosClient } from "../../api/axios";
 
 function ProfileImageUploader({ user, fetchUserProfile }) {
@@ -25,13 +26,11 @@ function ProfileImageUploader({ user, fetchUserProfile }) {
   const handleUpload = async () => {
     if (!selectedFile) {
       Swal.fire("Erreur", "Veuillez sélectionner une image à télécharger.", "error");
-      console.log("Aucun fichier sélectionné.");
       return;
     }
 
     const formData = new FormData();
     formData.append("profile_image", selectedFile);
-
 
     try {
       setUploading(true);
@@ -54,19 +53,26 @@ function ProfileImageUploader({ user, fetchUserProfile }) {
     }
   };
 
-
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
-      {/* Titre avec HR */}
-      <h3 className="text-xl font-bold mb-4 text-primary-dark">
-        Modifier l'image de profil
-      </h3>
-      <hr className="border-t-2 border-neutral-light mb-6" />
+    <motion.div
+      className="bg-white shadow-lg rounded-lg p-6 space-y-6 max-w-3xl mb-6 mx-auto"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      {/* Titre */}
+      <h3 className="text-xl font-bold text-primary-dark text-center">Modifier l'image de profil</h3>
+      <hr className="border-t-2 border-neutral-light" />
 
-      {/* Disposition principale */}
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-        {/* Aperçu de l'image actuelle ou sélectionnée */}
-        <div className="flex flex-col items-center">
+      {/* Contenu principal */}
+      <div className="flex flex-col md:flex-row items-center gap-6">
+        {/* Aperçu de l'image */}
+        <motion.div
+          className="flex flex-col items-center"
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <img
             src={
               previewUrl ||
@@ -80,35 +86,37 @@ function ProfileImageUploader({ user, fetchUserProfile }) {
             className="w-32 h-32 rounded-full shadow-md object-cover"
           />
           <p className="text-sm text-neutral mt-2">Image actuelle ou sélectionnée</p>
-        </div>
+        </motion.div>
 
-        {/* Formulaire de téléchargement */}
-        <div className="flex flex-col items-center w-full">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="w-full p-2 border border-neutral-light rounded-lg focus:ring-1 focus:ring-primary focus:border-primary outline-none"
-          />
+        {/* Formulaire d'upload */}
+        <div className="flex flex-col items-center w-full space-y-4">
+          <label className="w-full flex items-center gap-2 px-4 py-3 border rounded-lg text-neutral-dark bg-gray-100 hover:bg-gray-200 cursor-pointer">
+            <FaImage className="text-primary text-lg" />
+            <span>Sélectionnez une image</span>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
           {selectedFile && (
-            <p className="text-sm text-neutral mt-2">
+            <p className="text-sm text-neutral">
               Fichier sélectionné : <span className="font-medium">{selectedFile.name}</span>
             </p>
           )}
           <div className="flex gap-4 mt-4">
             <button
               onClick={handleUpload}
-              className="bg-primary hover:bg-primary-light text-white py-3 px-6 rounded-lg shadow-lg flex items-center gap-2 text-lg transition-all duration-200"
+              className="bg-primary-dark text-white py-3 px-6 rounded-lg shadow-lg flex items-center space-x-2 text-lg hover:bg-primary transition"
               disabled={uploading || !selectedFile}
             >
               {uploading ? (
                 <HashLoader size={20} color="white" />
               ) : (
                 <>
-                  <span>Mettre à jour l'image</span>
-                  <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-                    →
-                  </span>
+                  <FaUpload />
+                  <span>Mettre à jour</span>
                 </>
               )}
             </button>
@@ -118,18 +126,16 @@ function ProfileImageUploader({ user, fetchUserProfile }) {
                   setSelectedFile(null);
                   setPreviewUrl(null);
                 }}
-                className="bg-neutral hover:bg-neutral-dark text-white py-3 px-6 rounded-lg shadow-lg flex items-center gap-2 text-lg transition-all duration-200"
+                className="bg-gray-300 text-gray-700 py-3 px-6 rounded-lg shadow-lg flex items-center space-x-2 text-lg hover:bg-gray-400 transition"
               >
+                <FaRedo />
                 <span>Réinitialiser</span>
-                <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-                  ↺
-                </span>
               </button>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

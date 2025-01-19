@@ -19,7 +19,7 @@ function FAQ() {
         transition={{ duration: 0.8 }}
       >
         <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6">
-          Questions Fréquentes
+          Questions <span className="underline">Fréquentes</span>
         </h2>
         <p className="text-gray-700 text-lg mb-8 leading-relaxed">
           Vous avez des questions ? Consultez notre FAQ pour en savoir plus sur l'application ISGIDocs.

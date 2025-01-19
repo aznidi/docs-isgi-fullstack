@@ -12,6 +12,7 @@ function App() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  console.log(user)
 
   // Vérifier l'authentification et charger les données utilisateur
   useEffect(() => {
@@ -51,37 +52,6 @@ function App() {
       transition={{ duration: 0.5 }}
       className="container mx-auto p-6"
     >
-      {/* Section de bienvenue */}
-      <div className="flex flex-col md:flex-row items-center justify-between bg-white shadow-lg p-6 rounded-lg mb-8">
-        {/* Image à gauche */}
-        <div className="flex-shrink-0 mb-4 md:mb-0">
-          <img
-            src={
-              user.profile_image?.startsWith("http")
-                ? user.profile_image
-                : user.profile_image
-                ? `http://localhost:8000/storage/${user.profile_image}`
-                : "https://via.placeholder.com/150"
-            }
-            alt="Image de profil"
-            className="w-32 h-32 rounded-full shadow-md object-cover"
-          />
-        </div>
-
-        {/* Texte à droite */}
-        <div className="flex flex-col items-start md:items-start md:ml-6">
-          <h1 className="text-3xl font-extrabold text-primary-dark mb-2 font-montserrat">Salam {user.name} !</h1>
-          <p className="text-neutral text-lg mb-4">
-            Bienvenue sur votre tableau de bord. Vous pouvez gérer vos informations, mettre à jour votre photo de profil et explorer vos documents favoris.
-          </p>
-          <button
-            onClick={() => navigate("/favorites")}
-            className="bg-primary hover:bg-primary-light text-white py-2 px-4 rounded-lg shadow-lg text-lg transition-all duration-200"
-          >
-            Explorer vos documents
-          </button>
-        </div>
-      </div>
 
       {/* Autres sections */}
       <UserInfo user={user} fetchUserProfile={fetchUserProfile} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
@@ -7,8 +7,9 @@ import Button from "../ui/Button";
 import Lien from "../ui/Lien";
 import { axiosClient } from "../api/axios";
 import { useNavigate } from "react-router-dom";
-import { LOGIN_ROUTE } from "../router";
+import { HOME_ROUTE} from "../router";
 import { ClipLoader } from "react-spinners"; // Loader pour le bouton
+import { AuthContext } from "../context/AuthContext";
 
 // Traductions des messages d'erreur
 const errorTranslations = {
@@ -25,6 +26,7 @@ function translateErrorMessage(message) {
 
 function SignupPage() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Accès au contexte
 
   // Validation Schema avec Yup
   const validationSchema = Yup.object({
@@ -83,6 +85,17 @@ function SignupPage() {
               });
 
               if (response.status === 201) {
+                const token = response.data.token;
+
+                // Stocker le token
+                window.localStorage.setItem("token", token);
+
+                // Configurer axios pour inclure automatiquement le token
+                axiosClient.defaults.headers.Authorization = `Bearer ${token}`;
+
+                // Appeler la fonction de connexion du contexte
+                login(token);
+
                 // Alert de succès
                 Swal.fire({
                   title: "Inscription réussie !",
@@ -94,7 +107,7 @@ function SignupPage() {
                   },
                 }).then(() => {
                   // Redirigez vers la page de connexion après avoir cliqué sur "OK"
-                  navigate(LOGIN_ROUTE);
+                  navigate(HOME_ROUTE);
                 });
               }
             } catch (error) {

@@ -24,6 +24,7 @@ class Document extends Model
         'url',
         'likes',         // Nombre de likes
         'reports',       // Nombre de signalements
+        'content',
     ];
 
     /**

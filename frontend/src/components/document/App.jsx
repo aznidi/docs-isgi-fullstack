@@ -7,6 +7,7 @@ import DocSimilaires from "./DocSimilaires";
 import { HashLoader } from "react-spinners";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import ContentDoc from "./ContentDoc";
 
 function App() {
   const { id } = useParams(); // ID du document
@@ -82,6 +83,17 @@ function App() {
           loadingLikes={loadingLikes}
         />
       </div>
+
+      {/* Contenue du document */}
+      {
+        document?.content ? <div className="mb-10">
+                                <ContentDoc
+                                document={document}
+                                />
+                            </div>
+                            : ''
+      }
+
 
       {/* Commentaires */}
       <div className="mb-10">

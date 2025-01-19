@@ -40,12 +40,15 @@ class RegisteredUserController extends Controller
             'profile_image' => $avatarPath, // Enregistrer le chemin de l'avatar
         ]);
 
+        $token = $user->createToken('token')->plainTextToken;
+
 
         event(new Registered($user));
 
         return response()->json([
             'message' => 'Inscription réussie.',
             'user' => $user,
+            'token' => $token,
         ], 201);
     }
 }

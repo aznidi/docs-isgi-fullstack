@@ -40,7 +40,7 @@ function MustDownloadedDocs() {
     const fetchTopDownloadedDocuments = async () => {
       setLoading(true);
       try {
-        const response = await axiosClient.get("/api/statistics/top-downloaded-documents");
+        const response = await axiosClient.get("/api/public/statistics/top-downloaded-documents");
         setTopDocuments(response.data.topDownloadedDocuments);
       } catch (error) {
         console.error("Erreur lors de la récupération des documents les plus téléchargés :", error);

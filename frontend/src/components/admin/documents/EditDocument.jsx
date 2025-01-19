@@ -44,6 +44,7 @@ function EditDocument() {
       setValue("nomDoc", document.nomDoc);
       setValue("libelleDoc", document.libelleDoc);
       setValue("descriptionDoc", document.descriptionDoc);
+      setValue("content", document.content);
       setValue("type", document.type);
       setValue("module_id", document.module_id);
 
@@ -67,6 +68,7 @@ function EditDocument() {
     formData.append("descriptionDoc", data.descriptionDoc);
     formData.append("type", data.type);
     formData.append("module_id", data.module_id);
+    formData.append("content", data.content);
 
     if (data.type === "video") {
       formData.append("url", data.url);
@@ -158,19 +160,31 @@ function EditDocument() {
           <p className="text-red-500 text-sm">{errors.descriptionDoc?.message}</p>
         </div>
 
+
         <div>
-          <label className="block text-sm font-medium text-gray-700">Type</label>
-          <select
-            {...register("type", { required: "Type est obligatoire" })}
+          <label className="block text-sm font-medium text-gray-700">
+            Contenue de Document
+          </label>
+          <textarea
+            {...register("content")}
             className="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">Sélectionnez un type</option>
-            <option value="pdf">PDF</option>
-            <option value="word">Word</option>
-            <option value="txt">TXT</option>
-            <option value="video">Vidéo</option>
-          </select>
-          <p className="text-red-500 text-sm">{errors.type?.message}</p>
+          ></textarea>
+        </div>
+
+        <div>
+            <label className="block text-sm font-medium text-gray-700">Type</label>
+            <select
+                {...register("type", { required: "Type est obligatoire" })}
+                className="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+            >
+                <option value="">Sélectionnez un type</option>
+                <option value="video">Vidéo</option>
+                <option value="tp">TP</option>
+                <option value="efm">Examen de fin de module (EFM)</option>
+                <option value="control">Contrôle</option>
+                <option value="cours">Cours</option>
+            </select>
+            <p className="text-red-500 text-sm">{errors.type?.message}</p>
         </div>
 
         {type === "video" && (

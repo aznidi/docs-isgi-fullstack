@@ -74,6 +74,18 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::delete('/admin/documents/{id}', [DocumentController::class, 'destroy']);
 });
 
+
+/**
+ * Routes pour documents
+ */
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/documents', [DocumentController::class, 'index']); // Liste des documents
+    Route::get('/documents/{id}', [DocumentController::class, 'show']); // Détail d'un document
+    Route::get('/documents/filter', [DocumentController::class, 'filter']); // Filtrage des documents
+});
+
+
 /**
  * Routes pour la gestion des modules
  * - CRUD des modules
@@ -86,7 +98,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/modules/{id}', [ModuleController::class, 'destroy']); // Supprimer un module
 
     // Nouvelle route pour rechercher des modules
-    Route::get('/modules/search', [ModuleController::class, 'search']); // Recherche de modules
+    Route::get('/modules/search', [ModuleController::class, 'search']); // Recherche de modules paginée// Recherche de modules
 });
 
 /**
@@ -98,6 +110,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{id}/', [DocumentController::class, 'show']); // Récupérer un document
         Route::post('/{id}/comments', [DocumentController::class, 'addComment']); // Ajouter un commentaire
         Route::get('/{id}/comments', [DocumentController::class, 'getComments']); // Récupérer les commentaires
+        Route::put('/comments/{comment}', [DocumentController::class, 'updateComment']); // Modifier un commentaire
+        Route::delete('/comments/{comment}', [DocumentController::class, 'deleteComment']); // Supprimer un commentaire
         Route::post('/{id}/report', [DocumentController::class, 'reportDocument']); // Signaler un document
         Route::get('/{id}/similar', [DocumentController::class, 'getSimilarDocuments']); // Documents similaires
 
@@ -158,7 +172,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/exercises', [ExerciseController::class, 'index']); // Liste des exercices
     Route::get('/exercises/{id}', [ExerciseController::class, 'show']); // Détails d'un exercice
     Route::post('/exercises', [ExerciseController::class, 'store']); // Créer un exercice
-    Route::put('/exercises/{id}', [ExerciseController::class, 'update']); 
+    Route::put('/exercises/{id}', [ExerciseController::class, 'update']);
     Route::delete('/exercises/{id}', [ExerciseController::class, 'destroy']); // Supprimer un exercice
 });
 

@@ -45,6 +45,7 @@ class DocumentController extends Controller
             'path' => 'required_if:type,pdf,word,txt|file|mimes:pdf,doc,docx,txt|max:2048', // Validation des fichiers pour les types
             'url' => 'required_if:type,video|url', // Validation pour les vidéos
             'module_id' => 'required|exists:modules,id',
+            'content' => '',
         ]);
 
         // Gérer le stockage des fichiers ou l'URL
@@ -94,6 +95,7 @@ class DocumentController extends Controller
             'path' => 'required_if:type,pdf,word,txt|file|mimes:pdf,doc,docx,txt|max:2048', // Validation des fichiers pour les types
             'url' => 'required_if:type,video|url', // Validation pour les vidéos
             'module_id' => 'sometimes|exists:modules,id',
+            'content' => '',
         ]);
 
         // Gérer le stockage des fichiers ou l'URL
@@ -143,6 +145,7 @@ class DocumentController extends Controller
             ->where('module_id', $moduleId)
             ->where(function ($q) use ($query) {
                 $q->where('nomDoc', 'like', "%{$query}%")
+                ->orWhere('type', 'like', "%{$query}%")
                 ->orWhere('libelleDoc', 'like', "%{$query}%")
                 ->orWhere('descriptionDoc', 'like', "%{$query}%");
             })
@@ -184,11 +187,43 @@ class DocumentController extends Controller
         }
 
         $comments = Comment::where('document_id', $id)
-            ->with('user:id,name,profile_image') // Charger uniquement les champs nécessaires
+            ->with('user:id,name,email,profile_image') // Charger uniquement les champs nécessaires
             ->get();
 
         return response()->json($comments);
     }
+
+    public function updateComment(Request $request, Comment $comment)
+    {
+        $validated = $request->validate([
+            'content' => 'required|string|max:255',
+        ]);
+
+        // Vérifier si l'utilisateur est le propriétaire du commentaire
+        if ($comment->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Non autorisé'], 403);
+        }
+
+        $comment->update([
+            'content' => $validated['content'],
+        ]);
+
+        return response()->json(['message' => 'Commentaire modifié avec succès', 'comment' => $comment]);
+    }
+
+    public function deleteComment(Comment $comment)
+    {
+        // Vérifier si l'utilisateur est le propriétaire du commentaire
+        if ($comment->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Non autorisé'], 403);
+        }
+
+        $comment->delete();
+
+        return response()->json(['message' => 'Commentaire supprimé avec succès']);
+    }
+
+
 
 
     public function reportDocument(Request $request, $id)
@@ -298,6 +333,31 @@ class DocumentController extends Controller
 
         return response()->json(['liked' => $isLiked]);
     }
+
+    public function filter(Request $request)
+    {
+        $query = $request->input('query', '');
+        $type = $request->input('type', '');
+        $date = $request->input('date', '');
+
+        $documents = Document::query();
+
+        if ($query) {
+            $documents->where('title', 'like', "%$query%")
+                    ->orWhere('description', 'like', "%$query%");
+        }
+
+        if ($type) {
+            $documents->where('type', $type);
+        }
+
+        if ($date) {
+            $documents->whereDate('created_at', $date);
+        }
+
+        return response()->json($documents->get());
+    }
+
 
 
 }

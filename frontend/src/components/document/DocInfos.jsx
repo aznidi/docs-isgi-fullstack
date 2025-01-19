@@ -16,7 +16,7 @@ function DocInfos({ document }) {
   }
 
   const [isLiked, setIsLiked] = useState(false); // Suivi de l'état du like
-  const [likesCount, setLikesCount] = useState(0); // Compteur des likes
+  const [likesCount, setLikesCount] = useState(null); // Compteur des likes
   const [isLoadingLike, setIsLoadingLike] = useState(false); // Loader pour les likes
   const [isFavorite, setIsFavorite] = useState(false); // État pour les favoris
   const [isLoadingFav, setIsLoadingFav] = useState(false);
@@ -50,7 +50,7 @@ function DocInfos({ document }) {
         } catch (error) {
           //
         } finally {
-          setLoading(false); // Désactiver le loader
+          //
         }
     };
 
@@ -177,8 +177,8 @@ function DocInfos({ document }) {
               <span>{isLiked ? "Je n'aime plus" : "J'aime"}</span>
             </>
           )}
-          <span className="text-sm bg-white text-red-500 px-2 py-1 rounded-md font-bold ml-2">
-            {likesCount}
+          <span className="text-md  text-primary-dark px-2 py-1 rounded-md font-bold ml-2">
+            {likesCount }
           </span>
         </button>
 
@@ -200,6 +200,7 @@ function DocInfos({ document }) {
 
         </button>
       </div>
+
     </motion.div>
   );
 }

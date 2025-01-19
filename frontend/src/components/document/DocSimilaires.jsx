@@ -49,7 +49,7 @@ function DocSimilaires({ moduleId, documentId }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <h3 className="text-2xl font-semibold text-gray-800 mb-4">Documents Similaires</h3>
+      <h3 className="text-2xl font-semibold text-primary-dark mb-4">Vous pourriez aimer ça !</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {similarDocs.map((doc) => (
           <DocumentCard key={doc.id} document={doc} />

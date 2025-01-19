@@ -94,7 +94,7 @@ function Navbar() {
 
         {/* Desktop Menu */}
         <ul className="hidden lg:flex items-center space-x-6 text-primary">
-          {["Accueil", "Modules", "Documents", "Exercices"].map((item) => (
+          {["Accueil", "Modules", "Documents", "Exercises"].map((item) => (
             <li key={item} className="group relative">
               <Lien href={`/${item.toLowerCase()}`} variant="neutral" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                 {item}
@@ -189,7 +189,7 @@ function Navbar() {
 
             {/* Navigation Links */}
             <ul className="flex flex-col mt-20 space-y-6 w-full bg-white">
-            {["Accueil", "Modules", "Documents", "Exercices"].map((item, index) => (
+            {["Accueil", "Modules", "Documents", "Exercises"].map((item, index) => (
                 <li key={item} className="group relative">
                 <Lien href={`/${item.toLowerCase()}`} variant="neutral" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                     {item}
